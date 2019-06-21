@@ -37,8 +37,21 @@ var owners = [
 
 
 // GET /api/owners
-
+app.get('/api/owners',function(req,res,next){
+    return res.send(owners);
+});
 // GET /api/owners/:id
+
+app.get('/api/owners/:id',function(req,res,next){
+    
+    const owner = owners.find(function(o){
+        return o.id ===parseInt(req.params.id);
+       
+    });
+    console.log(req.params.id);
+        if (!owner) return res.status(404).send('Id not found');
+        res.send(owner);
+});
 
 // POST /api/owners
 
