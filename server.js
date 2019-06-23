@@ -54,8 +54,24 @@ app.get('/api/owners/:id',function(req,res,next){
 });
 
 // POST /api/owners
-
+app.post('/api/owners',function(req,res,next){
+    if (!req.body.name || req.body.name.length<2){
+        res.status(400).send('Name is required and longer than 2 characters');
+        return;
+    }
+    const ownerAdded={
+        id: owners.length + 1,
+        name: req.body.name
+    };
+    owners.push(ownerAdded);
+    res.send(ownerAdded);
+});
 // PUT /api/owners/:id
+app.put('/api/owners/:id', function(req, res) {
+
+    const ownerChanged = owners.find(function(o){
+        return o.id ===parseInt(req.params.id);
+});
 
 // DELETE /api/owners/:id
 
