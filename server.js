@@ -74,6 +74,19 @@ app.put('/api/owners/:id', function(req, res) {
 });
 
 // DELETE /api/owners/:id
+app.delete('/api/owners/:id', function(req, res) {
+    // Look up the owner
+    const ownerDeleted = owners.find(function(o){
+        return o.id ===parseInt(req.params.id);
+    });
+    //If not existing, return 404 
+     if (!ownerDeleted) return res.status(404).send('the owner with the given ID was not found');
+    //delete
+    const index = owners.indexOf(ownerDeleted);
+    owners.splice(index,1);
+    //Return the same owner
+    res.send(ownerDeleted);
+ });
 
 // GET /api/owners/:id/pets
 
