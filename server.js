@@ -103,7 +103,22 @@ app.get('/api/owners/:id/pets',function(req,res,next){
 });
 
 // GET /api/owners/:id/pets/:petId
+app.get('/api/owners/:id/pets/:petId',function(req,res,next){
 
+    const ownerOfPets = owners.find(function(owner){
+        return owner.id ===parseInt(req.params.id);
+       
+    });
+    
+    const ownerPetsId = ownerOfPets.pets.find(function(p){
+        return  p.id === parseInt(req.params.petId);
+    });
+
+    if (!ownerOfPets) return res.status(404).send('the pets with the given ID was not found');
+    if (!ownerPetsId) return res.status(404).send('the pet with the given ID was not found');
+    res.send(ownerPetsId);
+
+});
 // POST /api/owners/:id/pets
 
 // PUT /api/owners/:id/pets/:petId
