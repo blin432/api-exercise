@@ -89,6 +89,18 @@ app.delete('/api/owners/:id', function(req, res) {
  });
 
 // GET /api/owners/:id/pets
+app.get('/api/owners/:id/pets',function(req,res,next){
+
+    const ownerPets = owners.find(function(o){
+        return o.id ===parseInt(req.params.id);
+       
+    });
+    
+        if (!ownerPets) return res.status(404).send('the pets with the given ID was not found');
+        res.send(ownerPets.pets);
+    
+    
+});
 
 // GET /api/owners/:id/pets/:petId
 
