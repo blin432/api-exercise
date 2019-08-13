@@ -121,6 +121,29 @@ app.get('/api/owners/:id/pets/:petId',function(req,res,next){
 });
 // POST /api/owners/:id/pets
 
+app.post('/api/owners/:id/pets',function(req,res,next){
+
+    
+    if (!req.body.name || req.body.name.length<2){
+        res.status(400).send('Name is required and longer than 2 characters');
+        return;
+    }
+
+    const ownerOfPets = owners.find(function(owner){
+        return owner.id ===parseInt(req.params.id);
+            
+    });
+
+    const petsAdded={
+        id: ownerOfPets.pets.length + 1,
+        name: req.body.name
+    };
+
+    ownerOfPets.pets.push(petsAdded);
+    res.send(petsAdded);
+
+});
+
 // PUT /api/owners/:id/pets/:petId
 
 // DELETE /api/owners/:id/pets/:petId
