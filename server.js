@@ -146,6 +146,27 @@ app.post('/api/owners/:id/pets',function(req,res,next){
 
 // PUT /api/owners/:id/pets/:petId
 
+app.put('/api/owners/:id/pets/:petId', function(req, res) {
+    const ownerOfPets = owners.find(function(owner){
+        return owner.id ===parseInt(req.params.id);
+       
+    });
+    
+    const ownerPetsId = ownerOfPets.pets.find(function(p){
+        return  p.id === parseInt(req.params.petId);
+    });
+
+    if (!ownerOfPets) return res.status(404).send('the pets with the given ID was not found');
+    if (!ownerPetsId) return res.status(404).send('the pet with the given ID was not found');
+   
+   
+    ownerPetsId.name = req.body.name;
+    //return the updated course
+    res.send(ownerPetsId);
+
+ });
+
+
 // DELETE /api/owners/:id/pets/:petId
 
 
