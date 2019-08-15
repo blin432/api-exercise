@@ -168,6 +168,27 @@ app.put('/api/owners/:id/pets/:petId', function(req, res) {
 
 
 // DELETE /api/owners/:id/pets/:petId
+app.delete('/api/owners/:id/pets/:petId', function(req, res) {
+
+
+    const ownerOfPets = owners.find(function(owner){
+        return owner.id ===parseInt(req.params.id);
+       
+    });
+    
+    const ownerPetsId = ownerOfPets.pets.find(function(p){
+        return  p.id === parseInt(req.params.petId);
+    });
+
+    if (!ownerOfPets) return res.status(404).send('the pets with the given ID was not found');
+    if (!ownerPetsId) return res.status(404).send('the pet with the given ID was not found');
+   
+    console.log(ownerOfPets.pets);
+    const indexOfPet = ownerOfPets.pets.indexOf(ownerPetsId);
+    ownerOfPets.pets.splice(indexOfPet,1);
+    res.send(ownerPetsId);
+
+});
 
 
 app.listen(3000, function(){
